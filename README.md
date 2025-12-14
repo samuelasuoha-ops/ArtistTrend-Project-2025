@@ -76,24 +76,24 @@ python manage.py runserver
 ## Automated Data Updates
 
 Artist popularity data is refreshed daily using:
--A custom Django management command (update_artist_popularity)
--A Windows .bat script
--Windows Task Scheduler
+- A custom Django management command (update_artist_popularity)
+- A Windows .bat script
+- Windows Task Scheduler
 This ensures popularity history is updated automatically over time.
 
 ## Limitations
 
--SQLite is used for development and is not optimised for high traffic
--Popularity history is snapshot-based rather than continuous real-time tracking
--User authentication and personalisation are not implemented
+- SQLite is used for development and is not optimised for high traffic
+- Popularity history is snapshot-based rather than continuous real-time tracking
+- User authentication and personalisation are not implemented
 
 ## Future Improvements
 
--Migrate to PostgreSQL for production use
--Add user accounts and favourite artists
--Implement long-term popularity trend line charts
--Deploy using Docker or a cloud platform
--Add genre-based analytics and dashboards
+- Migrate to PostgreSQL for production use
+- Add user accounts and favourite artists
+- Implement long-term popularity trend line charts
+- Deploy using Docker or a cloud platform
+- Add genre-based analytics and dashboards
 
 ## Author
 
