@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block title %}About - ArtistTrend{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <h1 class="about-title">About ArtistTrend</h1>
+
+    <div class="about-section">
+        <h3>What is ArtistTrend?</h3>
+        <p>
+            ArtistTrend is a music analytics web application that allows users to search, compare, 
+            and monitor the popularity of music artists using live data from the Spotify Web API.
+            It is designed to provide an easy visual understanding of how artists trend over time.
+        </p>
+    </div>
+
+    <div class="about-section">
+        <h3>Key Features</h3>
+        <ul class="feature-list">
+            <li>Search for artists and view popularity, followers, genres, and images</li>
+            <li>Trending artists displayed based on real data and user search behavior</li>
+            <li>Compare two artists and view a chart showing popularity vs follower count</li>
+            <li>Artist detail pages including profile information and statistics</li>
+            <li>Spotify-powered insights updated automatically or manually through scheduled tasks</li>
+        </ul>
+    </div>
+
+    <div class="about-section">
+        <h3>Technologies Used</h3>
+        <ul class="tech-list">
+            <li><strong>Django</strong> - Web framework powering the application</li>
+            <li><strong>Python</strong> - Backend processing and API integration</li>
+            <li><strong>Spotify Web API</strong> - Live artist metadata and statistics</li>
+            <li><strong>Chart.js</strong> - Interactive data visualization</li>
+            <li><strong>SQLite</strong> - Persistent storage for artist data</li>
+            <li><strong>HTML, CSS, JavaScript</strong> - Frontend structure and styling</li>
+        </ul>
+    </div>
+
+
+    <div class="about-section">
+        <h3>Developer</h3>
+        <p>
+            Created by <strong>Samuel Asuoha</strong>
+        </p>
+    </div>
+</div>
+{% endblock %}

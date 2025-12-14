@@ -1,0 +1,93 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/home.css' %}">
+{% endblock %}
+
+{% block title %}Home - ArtistTrend{% endblock %}
+
+{% block content %}
+    <div class="hero-wrapper">
+        <div class="hero-panel" > <!--style="background-image: url('{% static "dashboard/logo.jpg" %}');"-->
+
+            <!-- Big pill search bar -->
+            <div class="hero-search">
+                <form method="get" class="hero-search-form">
+                    <input type="text"
+                           name="artist"
+                           placeholder="SEARCH FOR ARTIST"
+                           value="{{ search_query|default:'' }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <!-- Trending section using real data -->
+            <section class="trending-section">
+                <h2>Trending Now</h2>
+
+                {% if trending_artists %}
+                    <div class="trending-cards">
+                        {% for a in trending_artists %}
+                        <a href="{% url 'artist_detail' a.spotify_id %}" class="trending-card-link">
+                        <div class="trending-card">
+                            {% if a.image_url %}
+                                <img src="{{ a.image_url }}" alt="{{ a.name }}">
+                            {% endif %}
+                            <div class="trending-artist-name">{{ a.name }}</div>
+                            <div class="trending-popularity">
+                                Popularity:
+                                {% if a.popularity_records.last %}
+                                    {{ a.popularity_records.last.popularity }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </div>
+                            <div class="trending-popularity">Followers: {{ a.followers }}</div>
+                            <div class="trending-popularity">Searches: {{ a.search_count }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No trending data yet — search for some artists or run the seed command.</p>
+                {% endif %}
+            </section>
+
+            
+        </div>
+    </div>
+
+    <!-- Real search results appear below the mockup panel -->
+    {% if artists %}
+        <h2>Search Results</h2>
+
+        <div class="results-container">
+            {% for artist in artists %}
+                <div class="artist-card">
+                    {% if artist.image %}
+                        <img src="{{ artist.image }}" alt="{{ artist.name }}">
+                    {% endif %}
+
+                    <h3>{{ artist.name }}</h3>
+
+                    <p><strong>Popularity:</strong> {{ artist.popularity }}</p>
+                    <p><strong>Followers:</strong> {{ artist.followers }}</p>
+                    <p><strong>Genres:</strong> {{ artist.genres }}</p>
+
+                    <p>
+                        <a href="{% url 'artist_detail' artist.spotify_id %}" style="color:#00d4b1;">
+                            View details →
+                        </a>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% elif search_query %}
+        <p>No artists found for "{{ search_query }}".</p>
+    {% endif %}
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+{% endblock %}

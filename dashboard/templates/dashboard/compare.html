@@ -1,0 +1,137 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/compare.css' %}">
+{% endblock %}
+
+{% block title %}Compare Artists - ArtistTrend{% endblock %}
+
+{% block content %}
+    <h1>Compare Artists</h1>
+    <p>Enter two artists to compare their current popularity and followers.</p>
+
+    <form method="get" class="search-box">
+        <div style="margin-bottom:10px;">
+            <input type="text" name="artist1" placeholder="First artist..." value="{{ artist1_query|default:'' }}">
+        </div>
+        <div style="margin-bottom:10px;">
+            <input type="text" name="artist2" placeholder="Second artist..." value="{{ artist2_query|default:'' }}">
+        </div>
+        <button type="submit">Compare</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if artist1 or artist2 %}
+    <div class="compare-container">
+        {% if artist1 %}
+        <div class="compare-card">
+            {% if artist1.image_url %}
+                <img src="{{ artist1.image_url }}" alt="{{ artist1.name }}">
+            {% endif %}
+
+            <h2>{{ artist1.name }}</h2>
+
+            {% with last_record=artist1.popularity_records.last %}
+                {% if last_record %}
+                    <p><strong>Popularity:</strong> {{ last_record.popularity }}</p>
+                {% else %}
+                    <p><strong>Popularity:</strong> N/A</p>
+                {% endif %}
+            {% endwith %}
+
+            <p><strong>Followers:</strong> {{ artist1.followers }}</p>
+            <p><strong>Genres:</strong> {{ artist1.genres }}</p>
+        </div>
+        {% endif %}
+
+        {% if artist2 %}
+        <div class="compare-card">
+            {% if artist2.image_url %}
+                <img src="{{ artist2.image_url }}" alt="{{ artist2.name }}">
+            {% endif %}
+
+            <h2>{{ artist2.name }}</h2>
+
+            {% with last_record=artist2.popularity_records.last %}
+                {% if last_record %}
+                    <p><strong>Popularity:</strong> {{ last_record.popularity }}</p>
+                {% else %}
+                    <p><strong>Popularity:</strong> N/A</p>
+                {% endif %}
+            {% endwith %}
+
+            <p><strong>Followers:</strong> {{ artist2.followers }}</p>
+            <p><strong>Genres:</strong> {{ artist2.genres }}</p>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if artist1 and artist2 %}
+        <h2 style="margin-top: 30px;">Popularity vs Followers</h2>
+        <div class="compare-chart-wrapper">
+            <canvas id="compareBarChart"></canvas>
+        </div>
+    {% endif %}
+
+
+    {# ---- Bar chart scripts ---- #}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const labels = {{ bar_labels|default:"[]"|safe }};
+        const data1  = {{ bar_data1|default:"[]"|safe }};
+        const data2  = {{ bar_data2|default:"[]"|safe }};
+        const artist1Name = "{{ artist1.name|default:''|escapejs }}";
+        const artist2Name = "{{ artist2.name|default:''|escapejs }}";
+
+        console.log("Bar chart data:", labels, data1, data2);
+
+        const canvas = document.getElementById("compareBarChart");
+        if (!canvas) {
+            console.log("No canvas with id 'compareBarChart'.");
+            return;
+        }
+
+        if (!labels.length || !data1.length || !data2.length) {
+            console.log("Not enough data to draw bar chart.");
+            return;
+        }
+
+        const ctx = canvas.getContext("2d");
+
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,  // ["Popularity", "Followers (M)"]
+                datasets: [
+                    {
+                        label: artist1Name || "Artist 1",
+                        data: data1,
+                        borderWidth: 1
+                    },
+                    {
+                        label: artist2Name || "Artist 2",
+                        data: data2,
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: "Value" }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+{% endblock %}
+

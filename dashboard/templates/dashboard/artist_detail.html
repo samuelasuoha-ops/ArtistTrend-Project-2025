@@ -1,0 +1,126 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}{{ artist.name }} - ArtistTrend{% endblock %}
+
+{% block content %}
+<div class="artist-detail-page">
+
+    <div class="artist-header">
+        <div class="artist-main-card">
+            {% if artist.image_url %}
+                <img src="{{ artist.image_url }}" alt="{{ artist.name }}">
+            {% endif %}
+            <h1>{{ artist.name }}</h1>
+            <p><strong>Genres:</strong> {{ artist.genres }}</p>
+            <p><strong>Followers:</strong> {{ artist.followers }}</p>
+            <p><strong>Total searches in app:</strong> {{ artist.search_count }}</p>
+            <a href="{% url 'home' %}" class="back-link">&larr; Back to search</a>
+        </div>
+
+        <div class="artist-stats-card">
+            <h2>Popularity Over Time</h2>
+            {% if data and labels %}
+                <canvas id="popularityChart" width="500" height="260"></canvas>
+            {% else %}
+                <p>No popularity history yet for this artist.</p>
+            {% endif %}
+
+            <h3>Last 7 Days Trend</h3>
+            {% if spark_data and spark_labels %}
+                <canvas id="sparklineChart" width="500" height="120"></canvas>
+            {% else %}
+                <p>Not enough recent data for a 7-day sparkline.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="artist-tracks">
+        <h2>Top Tracks</h2>
+        {% if top_tracks %}
+            <table class="tracks-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Track</th>
+                        <th>Album</th>
+                        <th>Preview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in top_tracks %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{{ t.spotify_url }}" target="_blank">{{ t.name }}</a></td>
+                        <td>{{ t.album }}</td>
+                        <td>
+                            {% if t.preview_url %}
+                                <audio controls src="{{ t.preview_url }}"></audio>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Top tracks are not available at the moment.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = {{ labels|safe }};
+    const data = {{ data|safe }};
+    const sparkLabels = {{ spark_labels|safe }};
+    const sparkData = {{ spark_data|safe }};
+
+    if (labels.length && data.length) {
+        const ctx = document.getElementById('popularityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Popularity',
+                    data: data,
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: { min: 0, max: 100, title: { display: true, text: 'Popularity (0–100)' } },
+                    x: { title: { display: true, text: 'Recorded At' } }
+                }
+            }
+        });
+    }
+
+    if (sparkLabels.length && sparkData.length) {
+        const sctx = document.getElementById('sparklineChart').getContext('2d');
+        new Chart(sctx, {
+            type: 'line',
+            data: {
+                labels: sparkLabels,
+                datasets: [{
+                    data: sparkData,
+                    borderWidth: 1,
+                    fill: false,
+                    pointRadius: 0,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { display: false },
+                    x: { display: false }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}
