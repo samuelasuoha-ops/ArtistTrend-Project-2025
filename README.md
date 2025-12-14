@@ -64,6 +64,7 @@ pip install -r requirements.txt
 ### 4. Configure Spotify API credentials
 
 SPOTIFY_CLIENT_ID=your_client_id_here
+
 SPOTIFY_CLIENT_SECRET=your_client_secret_here
 
 ### 5. Run database migrations
