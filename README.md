@@ -98,4 +98,4 @@ This ensures popularity history is updated automatically over time.
 ## Author
 
 Samuel Asuoha
-ArtistTrend – Academic Full-Stack Django Project
+ArtistTrend – Academic Full-Stack Project
