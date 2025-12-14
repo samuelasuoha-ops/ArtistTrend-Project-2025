@@ -21,15 +21,15 @@ It allows users to search for artists, compare popularity metrics, and track tre
 
 ### Home – Trending Artists
 
-![Home Page](screenshots/home.png)
+![Home Page](screenshots/home.PNG)
 
 ### Compare Artists
 
-![Compare Page](screenshots/compare.png)
+![Compare Page](screenshots/compare.PNG)
 
 ### Artist Detail Page
 
-![Artist Detail](screenshots/artist_detail.png)
+![Artist Detail](screenshots/artist_detail.PNG)
 
 ---
 
