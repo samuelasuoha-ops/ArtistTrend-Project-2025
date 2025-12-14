@@ -1,27 +1,74 @@
 # ArtistTrend – Artist Popularity Trends Dashboard
 
-ArtistTrend is a Django web application that uses the Spotify Web API to analyse and visualise the popularity of music artists.
+ArtistTrend is a Django web application that uses the Spotify Web API to analyse and visualise the popularity of music artists.  
+It allows users to search for artists, compare popularity metrics, and track trends over time using real Spotify data.
+
+---
 
 ## Features
 
-- Search for artists and view their current popularity, followers, and genres
+- Search for artists and view their current popularity, followers, genres, and images
 - Store artist data and popularity history in a database
-- View an artist detail page with a Chart.js popularity-over-time graph
+- Display trending artists based on Spotify metrics and user search behaviour
 - Compare two artists side-by-side by popularity and followers
+- Visualize popularity and follower data using Chart.js
+- Artist detail pages with historical popularity tracking
 - Simple navigation with Home, Compare, and About pages
 
-## Technologies
+---
 
-- Django (Python)
-- SQLite database (via Django ORM)
-- Spotify Web API (Client Credentials Flow)
-- Chart.js (via CDN)
-- HTML, CSS, basic JavaScript
+## Screenshots
+
+### Home – Trending Artists
+
+![Home Page](screenshots/home.png)
+
+### Compare Artists
+
+![Compare Page](screenshots/compare.png)
+
+### Artist Detail Page
+
+![Artist Detail](screenshots/artist_detail.png)
+
+---
+
+## Technologies Used
+
+- **Backend:** Django (Python)
+- **Database:** SQLite (via Django ORM)
+- **External API:** Spotify Web API (Client Credentials Flow)
+- **Charts:** Chart.js (via CDN)
+- **Frontend:** HTML, CSS, JavaScript
+- **Automation:** Django management commands, Windows Task Scheduler
+
+---
 
 ## Setup Instructions
 
-1. Clone or extract the project.
-2. Create and activate a virtual environment.
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
+### 1. Clone the repository
+
+git clone https://github.com/yourusername/ArtistTrend.git
+cd ArtistTrend
+
+### 2. Create and activate a virtual environment
+
+python -m venv venv
+venv\Scripts\activate
+
+### 3. Install dependencies
+
+pip install -r requirements.txt
+
+### 4. Configure Spotify API credentials
+
+SPOTIFY_CLIENT_ID=your_client_id_here
+SPOTIFY_CLIENT_SECRET=your_client_secret_here
+
+### 5. Run database migrations
+
+python manage.py migrate
+
+### 6. Start the development server
+
+python manage.py runserver
