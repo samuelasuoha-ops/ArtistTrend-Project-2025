@@ -8,15 +8,15 @@ from .models import Artist, PopularityRecord
 
 
 def get_trending_artists():
-    """
-    Return up to 3 'trending' artists based on:
-    - latest popularity (50%)
-    - growth over last 7 days (30%)
-    - how many times they've been searched in this app (20%)
-    """
+    
+    # Returns up to 3 'trending' artists based on:
+    # - latest popularity (50%)
+    # - growth over last 7 days (30%)
+    # - how many times they've been searched in this app (20%)
+    
     one_week_ago = now() - timedelta(days=7)
 
-    # Annotate artists with recent averages and latest popularity
+    # Annotates artists with recent averages and latest popularity
     artists = Artist.objects.annotate(
         avg_popularity_7d=Avg(
             "popularity_records__popularity",
@@ -31,7 +31,7 @@ def get_trending_artists():
         if artist.avg_popularity_7d is None or artist.latest_popularity is None:
             continue
 
-        # Combined trending score
+        # Combines the trending score
         latest = artist.latest_popularity
         avg_7d = artist.avg_popularity_7d
         growth = latest - avg_7d  # positive = rising
@@ -48,21 +48,18 @@ def get_trending_artists():
 
     return [item["artist"] for item in trending_list[:3]]
 
-
-# ---------- Views ----------
-
 def home(request):
     context = {}
     query = request.GET.get("artist")
 
     if query:
         try:
-            # 1) Get results from Spotify
+            # Gets results from Spotify
             results = search_artist(query)
             context["artists"] = results
             context["search_query"] = query
 
-            # 2) Save/update artists + store popularity snapshots
+            # Saves or updates artists and stores popularity snapshots
             for artist_data in results:
                 artist_obj, created = Artist.objects.update_or_create(
                     spotify_id=artist_data["spotify_id"],
@@ -74,11 +71,11 @@ def home(request):
                     },
                 )
 
-                # Count searches for trending
+                # Counts searches for trending
                 artist_obj.search_count += 1
                 artist_obj.save()
 
-                # Create popularity record
+                # Creates popularity records
                 PopularityRecord.objects.create(
                     artist=artist_obj,
                     popularity=artist_data["popularity"],
@@ -87,16 +84,16 @@ def home(request):
         except Exception as error:
             context["error"] = str(error)
 
-    # 3) Always compute trending artists from DB
+    # To always compute trending artists from DB
     context["trending_artists"] = get_trending_artists()
 
     return render(request, "dashboard/home.html", context)
 
 
 def artist_detail(request, spotify_id):
-    """
-    Show one artist and a chart of their popularity over time.
-    """
+    
+    # Shows one artist and a chart of their popularity over time.
+    
     artist = get_object_or_404(Artist, spotify_id=spotify_id)
     records = artist.popularity_records.order_by("recorded_at")
 
@@ -109,7 +106,7 @@ def artist_detail(request, spotify_id):
     spark_labels = [r.recorded_at.strftime("%d %b") for r in recent_records]
     spark_data = [r.popularity for r in recent_records]
 
-    # Top tracks from Spotify
+    # The top tracks from Spotify
     top_tracks = []
     try:
         top_tracks = get_artist_top_tracks(spotify_id)
@@ -128,10 +125,9 @@ def artist_detail(request, spotify_id):
  
 
 def compare_artists(request):
-    """
-    Compare two artists: show image, latest popularity (if any),
-    followers and genres, plus a simple bar chart.
-    """
+    
+    # Compare two artists: show image, latest popularity (if any), followers and genres, plus a simple bar chart.
+    
     artist1_query = request.GET.get("artist1")
     artist2_query = request.GET.get("artist2")
 
@@ -175,9 +171,9 @@ def compare_artists(request):
                     },
                 )
 
-        # Build bar-chart data ONLY if we have both artists
+        # Builds bar-chart data ONLY if we have both artists
         if artist1 and artist2:
-            # Get latest popularity record for each, if any
+            # Gets the latest popularity record for each, if any
             last1 = artist1.popularity_records.order_by("-recorded_at").first()
             last2 = artist2.popularity_records.order_by("-recorded_at").first()
 
@@ -187,7 +183,7 @@ def compare_artists(request):
             followers1 = artist1.followers or 0
             followers2 = artist2.followers or 0
 
-            # Scale followers to millions so values are comparable on the chart
+            # Scales the followers to millions so values are comparable on the chart
             followers1_m = followers1 / 1_000_000 if followers1 else 0
             followers2_m = followers2 / 1_000_000 if followers2 else 0
 
@@ -204,7 +200,7 @@ def compare_artists(request):
         "artist1": artist1,
         "artist2": artist2,
         "error": error,
-        # bar chart data (always defined, may be empty arrays)
+        #  the bar chart data. This is always defined and may be empty arrays.
         "bar_labels": json.dumps(bar_labels),
         "bar_data1": json.dumps(bar_data1),
         "bar_data2": json.dumps(bar_data2),
@@ -212,7 +208,6 @@ def compare_artists(request):
     return render(request, "dashboard/compare.html", context)
 
 def about(request):
-    """
-    Simple About page describing the project.
-    """
+    
+    # A simple About page describing the project.
     return render(request, "dashboard/about.html")

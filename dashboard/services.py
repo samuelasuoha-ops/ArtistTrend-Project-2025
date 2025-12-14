@@ -6,7 +6,7 @@ SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 
 def get_spotify_token():
-    """Retrieve a Spotify access token using Client Credentials Flow."""
+    # Retrieves a Spotify access token using Client Credentials Flow.
     if not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET:
         raise ValueError("Spotify Client ID or Secret is not set. Check your .env file.")
 
@@ -23,7 +23,7 @@ def get_spotify_token():
 
 
 def search_artist(name):
-    """Search Spotify for an artist by name."""
+    # Searches Spotify for an artist by name.
     token = get_spotify_token()
 
     headers = {"Authorization": f"Bearer {token}"}
@@ -50,10 +50,7 @@ def search_artist(name):
     return artists
 
 def get_artist_top_tracks(spotify_id, market="US"):
-    """
-    Return a list of the artist's top tracks from Spotify.
-    Each item: {"name": ..., "album": ..., "preview_url": ..., "spotify_url": ...}
-    """
+    #Returns a list of the artist's top tracks from Spotify.
     token = get_spotify_token()
     headers = {"Authorization": f"Bearer {token}"}
     url = f"https://api.spotify.com/v1/artists/{spotify_id}/top-tracks"
@@ -74,10 +71,9 @@ def get_artist_top_tracks(spotify_id, market="US"):
     return tracks
 
 def get_artist_metrics(spotify_id):
-    """
-    Get current followers, genres and popularity for a single artist by Spotify ID.
-    Returns a dict or raises for HTTP errors.
-    """
+    
+    # Gets current followers, genres and popularity for a single artist by Spotify ID. Returns a dict or raises for HTTP errors.
+    
     token = get_spotify_token()
     headers = {"Authorization": f"Bearer {token}"}
     url = f"https://api.spotify.com/v1/artists/{spotify_id}"
@@ -91,3 +87,5 @@ def get_artist_metrics(spotify_id):
         "genres": ", ".join(data.get("genres", [])),
         "popularity": data.get("popularity", 0),
     }
+    
+    

@@ -1,4 +1,4 @@
-/* ===== Hero panel + mockup area (homepage) ===== */
+/* ===== Hero panel + home page ===== */
 
 .hero-wrapper {
     display: flex;
@@ -96,7 +96,7 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.4);
 }
 
-/* Make full card clickable without underline */
+/* Makes full card clickable without underline */
 .trending-card-link {
     text-decoration: none;
     color: inherit;
@@ -120,7 +120,7 @@
     font-size: 0.95rem;
 }
 
-/* Footer text inside hero panel (mockup copyright) */
+/* Footer text inside hero panel */
 .hero-footer {
     position: absolute;
     bottom: 15px;
@@ -129,7 +129,7 @@
     color: #fdf2e2;
 }
 
-/* ===== Responsive tweaks for home page ===== */
+/* Responsive features for home page */
 @media (max-width: 900px) {
     .hero-panel {
         padding: 25px 20px 40px;

@@ -7,7 +7,7 @@ class Artist(models.Model):
     followers = models.IntegerField(default=0)
     search_count = models.IntegerField(default=0)
 
-    # store artist image from Spotify
+    # stores artist image from Spotify
     image_url = models.URLField(blank=True, null=True)
 
     def __str__(self):

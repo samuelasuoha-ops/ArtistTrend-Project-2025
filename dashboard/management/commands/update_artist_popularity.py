@@ -24,12 +24,12 @@ class Command(BaseCommand):
                 )
                 continue
 
-            # Update artist fields
+            # Updates artist fields
             artist.followers = metrics["followers"]
             artist.genres = metrics["genres"]
             artist.save()
 
-            # Create a new popularity snapshot
+            # Creates a new popularity snapshot
             PopularityRecord.objects.create(
                 artist=artist,
                 popularity=metrics["popularity"],
@@ -41,7 +41,6 @@ class Command(BaseCommand):
                 )
             )
 
-            # Small sleep to be nice to the API (tune as needed)
             sleep(0.2)
 
         self.stdout.write(self.style.SUCCESS("Done updating artist popularity."))

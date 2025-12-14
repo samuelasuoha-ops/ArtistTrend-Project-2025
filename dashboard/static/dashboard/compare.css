@@ -44,7 +44,7 @@
     box-shadow: 0 0 25px rgba(0, 212, 177, 0.7);
 }
 
-/* Responsive tweaks for compare page */
+/* Responsive features for compare page */
 @media (max-width: 600px) {
     .compare-container {
         flex-direction: column;
