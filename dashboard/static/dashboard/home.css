@@ -120,6 +120,77 @@
     font-size: 0.95rem;
 }
 
+/* ===== results section ===== */
+.results-cards {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 35px;
+}
+
+/* Card itself */
+.result-card {
+    background-color: #fdf2e2;
+    color: #000;
+    width: 220px;
+    height: 260px; /* slightly taller than trending */
+    border-radius: 4px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    transition: 0.25s ease-in-out;
+}
+
+/* Clickable card wrapper */
+.result-card-link {
+    text-decoration: none;
+    color: white;
+}
+
+/* Hover effect (same as trending) */
+.result-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 212, 177, 0.8);
+    cursor: pointer;
+}
+
+.results-cards a,
+.results-cards a:visited,
+.results-cards a:hover,
+.results-cards a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Artist name */
+.result-artist-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+/* Meta text */
+.result-meta {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+/* Clamp genres */
+.result-genres {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* Footer text inside hero panel */
 .hero-footer {
     position: absolute;

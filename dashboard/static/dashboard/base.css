@@ -114,81 +114,7 @@ button:hover {
     opacity: 0.9;
 }
 
-/* ===== Generic results container ===== */
-.results-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 30px;
-}
 
-/* ===== Artist detail page ===== */
-.artist-detail-page {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.artist-header {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.artist-main-card {
-    background-color: #1a1a1a;
-    padding: 15px;
-    border-radius: 12px;
-    width: 280px;
-    box-shadow: 0 0 10px #00d4b1;
-    text-align: center;
-}
-
-.artist-main-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
-.artist-stats-card {
-    flex: 1;
-    background-color: #1a1a1a;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px #00d4b1;
-}
-
-.artist-tracks {
-    background-color: #1a1a1a;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px #00d4b1;
-}
-
-.tracks-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-}
-
-.tracks-table th,
-.tracks-table td {
-    border-bottom: 1px solid #333;
-    padding: 6px;
-}
-
-.tracks-table a {
-    color: #00d4b1;
-}
-
-.back-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: #00d4b1;
-    text-decoration: none;
-}
 
 /* Popularity chart on artist detail */
 #popularityChart {
@@ -199,28 +125,14 @@ button:hover {
 }
 
 /* ===== Responsive: global bits ===== */
-@media (max-width: 900px) {
-    .site-header {
+@media (max-width: 768px) {
+    .result-hero-card {
         flex-direction: column;
-        align-items: flex-start;
+        text-align: center;
     }
 
-    .nav-links {
-        margin-top: 10px;
-    }
-}
-
-@media (max-width: 600px) {
-    .results-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .page-content {
-        padding: 15px;
-    }
-
-    .logo-main {
-        font-size: 1.6rem;
+    .result-image {
+        width: 100%;
+        height: 220px;
     }
 }
