@@ -1,6 +1,6 @@
 @echo off
 REM === Navigate to your Django project ===
-cd "C:\Users\samue\OneDrive\Desktop\school work\parttime\PROJECT\project\artist_trends"
+cd "C:...\project\artist_trends"
 
 REM === Activate virtual environment ===
 call venv\Scripts\activate
