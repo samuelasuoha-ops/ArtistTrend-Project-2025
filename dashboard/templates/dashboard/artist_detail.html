@@ -6,10 +6,10 @@
 {% block content %}
 <div class="artist-detail-page">
 
-    <div class="artist-header">
-        <div class="artist-main-card">
+    <div class="artist-header" style="margin-bottom: 50px; border: 3px solid #00d4b1; padding: 30px; border-radius: 40px;">
+        <div class="artist-main-card" >
             {% if artist.image_url %}
-                <img src="{{ artist.image_url }}" alt="{{ artist.name }}">
+                <img style = "width: 200px; height: 200px; object-fit: cover; border-radius: 4px 4px 0 0; margin-bottom: 10px;}" src="{{ artist.image_url }}" alt="{{ artist.name }}">
             {% endif %}
             <h1>{{ artist.name }}</h1>
             <p><strong>Genres:</strong> {{ artist.genres }}</p>
@@ -17,18 +17,18 @@
             <p><strong>Total searches in app:</strong> {{ artist.search_count }}</p>
             <a href="{% url 'home' %}" class="back-link">&larr; Back to search</a>
         </div>
-
+        
         <div class="artist-stats-card">
-            <h2>Popularity Over Time</h2>
+            <h2 style="text-align: center">Popularity Over Time</h2>
             {% if data and labels %}
-                <canvas id="popularityChart" width="500" height="260"></canvas>
+                <canvas id="popularityChart" width="800" height="260"></canvas>
             {% else %}
                 <p>No popularity history yet for this artist.</p>
             {% endif %}
 
             <h3>Last 7 Days Trend</h3>
             {% if spark_data and spark_labels %}
-                <canvas id="sparklineChart" width="500" height="120"></canvas>
+                <canvas id="sparklineChart" width="300" height="120"></canvas>
             {% else %}
                 <p>Not enough recent data for a 7-day sparkline.</p>
             {% endif %}
@@ -38,7 +38,7 @@
     <div class="artist-tracks">
         <h2>Top Tracks</h2>
         {% if top_tracks %}
-            <table class="tracks-table">
+            <table class="tracks-table" border="bold">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -51,7 +51,7 @@
                     {% for t in top_tracks %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td><a href="{{ t.spotify_url }}" target="_blank">{{ t.name }}</a></td>
+                        <td><a href="{{ t.spotify_url }}" target="_blank" style="text-decoration: none; color: #00d4b1">{{ t.name }}</a></td>
                         <td>{{ t.album }}</td>
                         <td>
                             {% if t.preview_url %}
