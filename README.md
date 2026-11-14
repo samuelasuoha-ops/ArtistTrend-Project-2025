@@ -48,7 +48,7 @@ It allows users to search for artists, compare popularity metrics, and track tre
 
 ### 1. Clone the repository
 
-git clone https://github.com/samuelasuoha-ops/ArtistTrend.git
+git clone https://github.com/samuelasuoha-ops/ArtistTrend-Project-2025.git
 cd ArtistTrend
 
 ### 2. Create and activate a virtual environment
